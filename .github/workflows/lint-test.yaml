@@ -53,8 +53,8 @@ jobs:
         run: |
           docker pull adsai/vllm-cpu-env:latest
           docker pull amazon/aws-cli:2.6.4
-          kind load docker-image  amazon/aws-cli:2.6.4 --name kind
-          kind load docker-image adsai/vllm-cpu-env:latest --name kind
+          kind load docker-image  amazon/aws-cli:2.6.4 --name kind-chart-testing
+          kind load docker-image adsai/vllm-cpu-env:latest --name kind-chart-testing
           docker network connect test-net "$(docker ps -aqf "name=kind-control-plane")"
 
       - name: Run chart-testing (install)
