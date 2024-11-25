@@ -58,18 +58,18 @@ jobs:
     
       - name: curl test
             run: |
-            kubectl port-forward svc/test-vllm-service 8001:80 -n test-vllm 
-            CODE=`curl --location http://localhost:8001/v1/completions \
-                    --header "Content-Type: application/json" \
-                    --data '{
-                            "model": "opt-125m",
-                            "prompt": "San Francisco is a",
-                            "max_tokens": 7,
-                            "temperature": 0
-                    }'`
-            if [ $CODE!="200" ] 
-            then
-                echo "FAILURE"
-            else
-                echo "SUCCESS"
-            fi
+              kubectl port-forward svc/test-vllm-service 8001:80 -n test-vllm 
+              CODE=`curl --location http://localhost:8001/v1/completions \
+                      --header "Content-Type: application/json" \
+                      --data '{
+                              "model": "opt-125m",
+                              "prompt": "San Francisco is a",
+                              "max_tokens": 7,
+                              "temperature": 0
+                      }'`
+              if [ $CODE!="200" ] 
+              then
+                  echo "FAILURE"
+              else
+                  echo "SUCCESS"
+              fi
