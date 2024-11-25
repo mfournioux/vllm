@@ -57,19 +57,19 @@ jobs:
         run: ct install --target-branch ${{ github.event.repository.default_branch }} --chart-dirs examples/chart-helm --charts examples/chart-helm --namespace=ns-vllm --helm-extra-set-args "--set secrets.s3endpoint=http://minio:9000 --set secrets.s3bucketname=testbucket --set secrets.s3accesskeyid=$AWS_ACCESS_KEY_ID --set secrets.s3accesskey=$AWS_ACCESS_ACCESS_KEY --set image.env[0].name=VLLM_CPU_KVCACHE_SPACE --set-string image.env[0].value="1" --set-string resources.requests.cpu="1" --set resources.requests.memory=4Gi --set-string resources.requests."nvidia/gpu"="0" --set-string resources.limits.cpu="2" --set resources.limits.memory=5Gi --set-string resources.limits."nvidia/gpu"="0"""
     
       - name: curl test
-            run: |
-              kubectl port-forward svc/test-vllm-service 8001:80 -n test-vllm 
-              CODE=`curl --location http://localhost:8001/v1/completions \
-                      --header "Content-Type: application/json" \
-                      --data '{
-                              "model": "opt-125m",
-                              "prompt": "San Francisco is a",
-                              "max_tokens": 7,
-                              "temperature": 0
-                      }'`
-              if [ $CODE!="200" ] 
-              then
-                  echo "FAILURE"
-              else
-                  echo "SUCCESS"
-              fi
+        run: |
+          kubectl port-forward svc/test-vllm-service 8001:80 -n test-vllm 
+          CODE=`curl --location http://localhost:8001/v1/completions \
+                  --header "Content-Type: application/json" \
+                  --data '{
+                          "model": "opt-125m",
+                          "prompt": "San Francisco is a",
+                          "max_tokens": 7,
+                          "temperature": 0
+                  }'`
+          if [ $CODE!="200" ] 
+          then
+              echo "FAILURE"
+          else
+              echo "SUCCESS"
+          fi
