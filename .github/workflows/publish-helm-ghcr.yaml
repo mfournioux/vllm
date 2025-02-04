@@ -2,7 +2,9 @@ name: Publish Helm chart on Github Registry
 
 # Configures this workflow to run every time a change is pushed to the branch called `main`.
 on:
-  pull_request:
+  push:
+    paths:
+      - 'examples/online_serving/chart-helm/**'
 env:
   CHART_NAME: chart-vllm
 
